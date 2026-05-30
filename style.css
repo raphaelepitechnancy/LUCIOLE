@@ -281,30 +281,6 @@ body {
   display: none;
 }
 
-/* iOS Status Bar */
-.ipad-status-bar {
-  height: 28px;
-  background: var(--white);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 24px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--blue-navy);
-  z-index: 50;
-  border-bottom: var(--border-width) solid var(--blue-navy);
-}
-
-.status-icons {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.status-icon {
-  color: var(--blue-navy);
-}
 
 /* ==========================================================================
    APP HEADER

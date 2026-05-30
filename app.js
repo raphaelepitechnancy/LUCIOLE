@@ -70,21 +70,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Speech & Timers
   const ttsBubble = document.getElementById('tts-bubble');
   const ttsBubbleText = ttsBubble.querySelector('.bubble-text');
-  const liveTime = document.getElementById('live-time');
   const timerProgress = document.getElementById('timer-progress');
   const timerSecondsText = document.getElementById('timer-seconds');
 
-  // ==========================================================================
-  // CLOCK
-  // ==========================================================================
-  function updateClock() {
-    const now = new Date();
-    let hours = now.getHours().toString().padStart(2, '0');
-    let minutes = now.getMinutes().toString().padStart(2, '0');
-    liveTime.textContent = `${hours}:${minutes}`;
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
 
   // ==========================================================================
   // SCAN BEEP SOUND EFFECT (Web Audio API)
