@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUCIOLE - Repérer les signaux faibles pour agir plus tôt</title>
+  <!-- Google Fonts for friendly, readable typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Background decorative elements in blue & yellow theme -->
+  <div class="bg-gradient-circle bg-circle-blue"></div>
+  <div class="bg-gradient-circle bg-circle-yellow"></div>
+
+  <!-- App Wrapper (iPad Simulator container) -->
+  <div class="app-container">
+
+    <!-- Controls panel outside the iPad -->
+    <div class="control-panel">
+      <div class="panel-header">
+        <h2>🛠 Rose des Vents - LUCIOLE</h2>
+        <p>Ajustez l'affichage pour vos tests de la maquette Enseignant.</p>
+      </div>
+      <div class="control-group">
+        <button id="btn-toggle-frame" class="panel-btn">🔲 Masquer le cadre iPad</button>
+        <button id="btn-reset-app" class="panel-btn danger">🔄 Réinitialiser la démo</button>
+      </div>
+      <div class="voice-assistant-status">
+        <span class="status-indicator active"></span>
+        <p><strong>Ressources :</strong> Maquette premium avec allumage de la luciole, effet de rayons lumineux, scanner
+          réaliste et compte à rebours de 30 secondes.</p>
+      </div>
+    </div>
+
+    <!-- The Simulated iPad Device -->
+    <div class="ipad-device" id="ipad-wrapper">
+      <div class="ipad-camera"></div>
+      <div class="ipad-speaker"></div>
+
+      <!-- iPad Screen Content -->
+      <div class="ipad-screen">
+
+        <!-- iPad iOS Status Bar -->
+        <div class="ipad-status-bar">
+          <span class="status-time" id="live-time">09:41</span>
+          <div class="status-icons">
+            <svg class="status-icon" viewBox="0 0 24 24" width="16" height="16">
+              <path fill="currentColor"
+                d="M12 21a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM4.8 9.8a10 10 0 0 1 14.4 0l-1.4 1.4a8 8 0 0 0-11.6 0L4.8 9.8zm2.8 2.8a6 6 0 0 1 8.8 0l-1.4 1.4a4 4 0 0 0-6 0l-1.4-1.4zm2.8 2.8a2 2 0 0 1 3.2 0l-1.6 1.6-1.6-1.6z" />
+            </svg>
+            <svg class="status-icon" viewBox="0 0 24 24" width="16" height="16">
+              <rect x="2" y="6" width="17" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2" />
+              <rect x="5" y="9" width="11" height="6" rx="1" fill="currentColor" />
+              <path d="M20 10h1v4h-1z" fill="currentColor" />
+            </svg>
+            <span class="status-battery-text">100%</span>
+          </div>
+        </div>
+
+        <!-- Blue Header Bar (as in PDF: small Luciole on left, text "Pas sûr, mais..." center-left) -->
+        <header class="app-header hidden" id="app-header-nav">
+          <div class="header-logo-section">
+            <!-- Small Luciole Logo in header -->
+            <div class="header-logo-container" id="header-logo-wrapper">
+              <!-- Inline SVG Luciole (small) -->
+              <img class="luciole-img-small is-unlit" src="logo_unlit.png" width="42" height="42" alt="LUCIOLE Logo">
+            </div>
+            <h1 class="header-title">Pas sûr, mais...</h1>
+          </div>
+
+          <!-- Navigation actions -->
+          <div class="header-right-actions">
+            <!-- Voice Guide accessibility toggle -->
+            <button id="btn-voice-master" class="voice-btn" title="Guide vocal">🔊</button>
+
+            <div class="user-badge hidden" id="user-profile-badge"
+              style="display: flex; align-items: center; gap: 8px; padding: 4px 10px;">
+              <img src="teacher.png"
+                style="width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid var(--blue-navy); object-fit: cover;"
+                alt="Avatar Enseignant">
+              <span style="font-weight: 800; font-size: 0.8rem;">Mme. Martin</span>
+            </div>
+
+            <button class="back-btn" id="btn-back">
+              <span>Retour</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Dynamic Speech Bubble for TTS Feedback -->
+        <div class="speech-bubble-overlay hidden" id="tts-bubble">
+          <span class="bubble-text">Bonjour !</span>
+        </div>
+
+        <!-- Main Workspace for Screens -->
+        <main class="app-content">
+
+          <!-- PAGE 1: ACCUEIL (Luciole grand format, couleurs jaune/bleu) -->
+          <section class="app-page active" id="page-welcome">
+            <div class="welcome-container">
+
+              <!-- Large Luciole SVG - ETEINTE par défaut -->
+              <div class="main-luciole-wrapper" id="main-luciole-logo">
+                <img class="luciole-img-large is-unlit" src="logo_unlit.png" width="160" height="160"
+                  alt="LUCIOLE Logo">
+              </div>
+
+              <!-- Title & Subtitle -->
+              <div class="welcome-text">
+                <h1>LUCIOLE</h1>
+                <p class="tagline">Repérer les signaux faibles pour agir plus tôt</p>
+              </div>
+
+              <!-- Login triggers -->
+              <div class="login-action-box">
+                <button class="btn-barcode-mode" id="btn-barcode-go">
+                  <span>Se connecter par Code Barre</span>
+                </button>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- PAGE 1b: SCANNER DE CODE BARRE (Étape 1 du PDF) -->
+          <section class="app-page" id="page-scan">
+            <div class="step-container">
+              <div class="step-progress-indicator">
+                <div class="progress-dot active"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+              </div>
+
+              <div class="step-num">1</div>
+              <h2 class="step-title">Je scanne mon code barre</h2>
+              <p class="step-subtitle">Approchez votre badge professionnel du lecteur</p>
+
+              <!-- Scanner simulation screen -->
+              <div class="scanner-frame-container">
+                <div class="scanner-camera-feed">
+                  <!-- Red scanning laser line -->
+                  <div class="scanner-laser"></div>
+
+                  <!-- Barcode / QR Graphic to click -->
+                  <div class="scanner-target-badge" id="btn-trigger-scan">
+                    <div class="barcode-graphic">
+                      <!-- Bar lines -->
+                      <div class="bar"></div>
+                      <div class="bar thin"></div>
+                      <div class="bar"></div>
+                      <div class="bar fat"></div>
+                      <div class="bar"></div>
+                      <div class="bar thin"></div>
+                      <div class="bar fat"></div>
+                      <div class="bar"></div>
+                      <div class="bar thin"></div>
+                      <div class="bar"></div>
+                      <div class="bar fat"></div>
+                      <div class="bar thin"></div>
+                    </div>
+                    <span class="scanner-hint-text">Cliquez pour simuler le scan</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- PAGE 2a: CHOIX DE LA CLASSE (Étape 2 du PDF) -->
+          <section class="app-page" id="page-classes">
+            <div class="step-container">
+              <div class="step-progress-indicator">
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot active"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+              </div>
+
+              <div class="step-num">2</div>
+              <h2 class="step-title">Jeune concerné</h2>
+              <p class="step-subtitle">Sélectionnez la classe de l'élève</p>
+
+              <!-- Classes Grid -->
+              <div class="classes-grid">
+                <button class="class-btn" data-class="6e A">6<sup>e</sup> A</button>
+                <button class="class-btn" data-class="6e B">6<sup>e</sup> B</button>
+                <button class="class-btn" data-class="6e C">6<sup>e</sup> C</button>
+                <button class="class-btn" data-class="5e A">5<sup>e</sup> A</button>
+                <button class="class-btn" data-class="5e B">5<sup>e</sup> B</button>
+                <button class="class-btn" data-class="5e C">5<sup>e</sup> C</button>
+                <button class="class-btn" data-class="4e A">4<sup>e</sup> A</button>
+                <button class="class-btn" data-class="4e B">4<sup>e</sup> B</button>
+                <button class="class-btn" data-class="4e C">4<sup>e</sup> C</button>
+                <button class="class-btn" data-class="3e A">3<sup>e</sup> A</button>
+                <button class="class-btn" data-class="3e B">3<sup>e</sup> B</button>
+                <button class="class-btn" data-class="3e C">3<sup>e</sup> C</button>
+                <button class="class-btn" data-class="2nde A">2<sup>nd</sup> A</button>
+                <button class="class-btn" data-class="2nde B">2<sup>nd</sup> B</button>
+                <button class="class-btn" data-class="2nde C">2<sup>nd</sup> C</button>
+              </div>
+            </div>
+          </section>
+
+          <!-- PAGE 2b: TROMBINOSCOPE DES ELEVES (Étape 2 suite du PDF) -->
+          <section class="app-page" id="page-students">
+            <div class="step-container">
+              <div class="step-progress-indicator">
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot active"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+              </div>
+
+              <div class="step-num">2</div>
+              <h2 class="step-title">Jeune concerné</h2>
+              <p class="step-subtitle" id="label-selected-class">Sélectionnez l'élève concerné</p>
+
+              <!-- Students Grid (21 students) -->
+              <div class="students-grid" id="students-grid-container">
+                <!-- Will be dynamically populated in app.js with different diverse names and styled avatars -->
+              </div>
+            </div>
+          </section>
+
+          <!-- PAGE 3: DOMAINE CONCERNÉ (Étape 3 du PDF) -->
+          <section class="app-page" id="page-themes">
+            <div class="step-container">
+              <div class="step-progress-indicator">
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot active"></div>
+                <div class="progress-dot"></div>
+                <div class="progress-dot"></div>
+              </div>
+
+              <div class="step-num">3</div>
+              <h2 class="step-title">Cela concerne</h2>
+              <p class="step-subtitle">Sélectionnez le type d'indice observé</p>
+
+              <!-- Theme Category Buttons -->
+              <div class="themes-layout">
+                <button class="theme-card" data-theme="Santé">
+                  <h3>SANTÉ</h3>
+                  <span class="theme-arrow">→</span>
+                </button>
+                <button class="theme-card" data-theme="Mal-être">
+                  <h3>MAL-ÊTRE</h3>
+                  <span class="theme-arrow">→</span>
+                </button>
+                <button class="theme-card" data-theme="Scolaire">
+                  <h3>SCOLARITÉ</h3>
+                  <span class="theme-arrow">→</span>
+                </button>
+                <button class="theme-card" data-theme="Comportement">
+                  <h3>COMPORTEMENT</h3>
+                  <span class="theme-arrow">→</span>
+                </button>
+                <button class="theme-card" data-theme="Ne sais pas trop">
+                  <h3>NE SAIS PAS TROP</h3>
+                  <span class="theme-arrow">→</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- PAGE 4: ORIGINE DE L'OBSERVATION (Étape 4 du PDF) -->
+          <section class="app-page" id="page-origin">
+            <div class="step-container">
+              <div class="step-progress-indicator">
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot active"></div>
+                <div class="progress-dot"></div>
+              </div>
+
+              <div class="step-num">4</div>
+              <h2 class="step-title">Origine de l'observation</h2>
+              <p class="step-subtitle">Précisez comment vous avez repéré ce signal</p>
+
+              <div class="origin-options">
+                <button class="origin-btn" data-origin="Observé moi-même">
+                  <span>OBSERVÉ PAR MOI-MÊME</span>
+                </button>
+                <button class="origin-btn" data-origin="Rapporté par quelqu'un">
+                  <span>RAPPORTÉ PAR QUELQU'UN</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <!-- PAGE 5: REMERCIEMENT & SUCCÈS (Étape 5 du PDF - Luciole ALLUMÉE avec effets de lumière premium) -->
+          <section class="app-page" id="page-success">
+            <div class="success-layout">
+              <div class="step-progress-indicator">
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot completed"></div>
+                <div class="progress-dot completed active"></div>
+              </div>
+
+              <div class="step-num">5</div>
+
+              <!-- Glowing Luciole - Logo is ALLUMÉ with a static glow halo -->
+              <div class="lit-luciole-container" id="lit-luciole-logo">
+                <!-- SVG Luciole (large lit version) -->
+                <img class="luciole-img-large is-lit" src="logo.png" width="160" height="160" alt="LUCIOLE Logo">
+              </div>
+
+              <!-- Message -->
+              <div class="thank-you-box">
+                <h2>Merci !</h2>
+                <h4 class="success-message">Un membre de l'équipe Luciole vient échanger avec vous.</h4>
+              </div>
+
+              <!-- Auto logout widget -->
+              <div class="logout-timer-container">
+                <div class="timer-bar-wrapper">
+                  <div class="timer-bar-progress" id="timer-progress"></div>
+                </div>
+                <p class="timer-label">Déconnexion automatique dans <span id="timer-seconds">30</span> secondes...</p>
+              </div>
+
+              <!-- Logout Button -->
+              <button class="btn-disconnect" id="btn-disconnect">
+                <span>J'ai un autre doute...</span>
+              </button>
+
+            </div>
+          </section>
+
+        </main>
+
+        <!-- Simulated FranceConnect / Login Loader Overlay -->
+        <div class="modal-overlay hidden" id="fc-modal">
+          <div class="modal-card">
+            <div class="modal-body">
+              <div class="fc-loading-spinner"></div>
+              <p class="loading-label" id="fc-loading-text">Connexion à votre compte en cours...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- iPad Home Button Indicator Bar -->
+        <div class="ipad-home-indicator"></div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
